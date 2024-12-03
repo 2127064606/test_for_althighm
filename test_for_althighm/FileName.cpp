@@ -1,26 +1,27 @@
 #include<iostream>
-#include<vector>
-#include<algorithm>
+#include"Algorithms_greedy.h"
 using namespace std;
-void Loading( vector<int>& w,vector<int>&selects ,int capacity) {
-	int n = w.size();
-	sort(w.begin(), w.end());
-	for (int i = 0;i < n;i++) {
-		if (w[i] <= capacity) {
-			selects[i] = 1;//select the item
-			capacity -= w[i];//reduce the capacity
+void test_for_activity_selection() {
+	vector<greedy_algorithm::Activity> activities{ {1, 3}, {2, 4}, {3, 5}, {4, 6}, {5, 7} };
+	vector<bool> selected(activities.size(), false);
+	greedy_algorithm::greedy_activity_selection(activities, selected);
+	for (int i = 0; i < selected.size(); i++) {
+		if (selected[i]) {
+			cout << "Activity " << i + 1 << " selected" << endl;
+		}
+	}
+}
+void test_for_loading() {
+	vector<int> weights{ 1, 2, 3, 4, 5 };
+	vector<bool>selects(weights.size(), false);
+	int capacity = 10;
+	greedy_algorithm::greedy_loading(weights, capacity,selects);
+	for (int i = 0; i < selects.size(); i++) {
+		if (selects[i]) {
+			cout << "Item " << i + 1 << " selected" << endl;
 		}
 	}
 }
 int main() {
-	vector<int> w = { 2,7,3,4,5,6,8,9,10 };
-	vector<int> selects(w.size(), 0);
-	int capacity = 20;
-	Loading(w, selects, capacity);
-	for (int i = 0;i < w.size();i++) {
-		if (selects[i] == 1) {
-			cout << w[i] << " ";
-		}
-	}
-	return 0;
+	test_for_loading();
 }
